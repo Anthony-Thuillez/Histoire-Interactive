@@ -3,6 +3,11 @@ var imgContainer = document.querySelector('.imgContainer');
 var title = document.querySelector('.title');
 var game = document.querySelector('.game');
 var volume = document.querySelector('.volume');
+var count = 0;
+
+function next(cb) {
+  count += cb;
+}
 
 var audio_music = new Audio();
 audio_music.src = '././sounds/song.mp3';
@@ -38,7 +43,7 @@ function createQuestion() {
   questionDiv.setAttribute('class', 'questionContainer');
   questionDiv.appendChild(questionP);
   questionP.setAttribute('class', 'question');
-  questionP.textContent = 'Êtes-vous en couple ?';
+  questionP.textContent = data.questions[count].question;
   questionDiv.appendChild(answerDiv);
   answerDiv.setAttribute('class', 'answer');
   answerDiv.appendChild(answerBtnYes);
@@ -68,16 +73,17 @@ function createQuestion() {
     }
   }, 1500);
 
-  answerBtnYes.addEventListener('click', removeNo);
-  answerBtnNo.addEventListener('click', removeYes);
+  answerBtnYes.addEventListener('click', choiceYes);
+  answerBtnNo.addEventListener('click', choiceNo);
 
-  function removeNo() {
+  function choiceYes() {
     answerBtnNo.style.opacity = '0';
     answerBtnNo.style.cursor = 'auto';
-    answerBtnNo.removeEventListener('click', removeYes);
-    answerBtnYes.removeEventListener('click', removeNo);
+    answerBtnNo.removeEventListener('click', choiceNo);
+    answerBtnYes.removeEventListener('click', choiceYes);
     bgBtnYes.style.marginLeft = '0';
     answerBtnYes.style.background = '#8CD790';
+    next(data.questions[count].yes);
     setTimeout(function() {
       bgBtnYes.style.marginLeft = '70px';
     }, 350);
@@ -89,13 +95,14 @@ function createQuestion() {
     });
   };
 
-  function removeYes() {
+  function choiceNo() {
     answerBtnYes.style.opacity = '0';
     answerBtnYes.style.cursor = 'auto';
-    answerBtnYes.removeEventListener('click', removeNo);
-    answerBtnNo.removeEventListener('click', removeYes);
+    answerBtnYes.removeEventListener('click', choiceYes);
+    answerBtnNo.removeEventListener('click', choiceNo);
     bgBtnNo.style.marginLeft = '0';
     answerBtnNo.style.background = '#8CD790';
+    next(data.questions[count].no);
     setTimeout(function() {
       bgBtnNo.style.marginLeft = '70px';
     }, 350);
