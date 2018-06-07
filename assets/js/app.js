@@ -44,18 +44,26 @@ function createQuestion() {
   questionDiv.appendChild(questionP);
   questionP.setAttribute('class', 'question');
   questionP.textContent = data.questions[count].question;
-  questionDiv.appendChild(answerDiv);
-  answerDiv.setAttribute('class', 'answer');
-  answerDiv.appendChild(answerBtnYes);
-  answerBtnYes.setAttribute('class', 'answerYes');
-  answerBtnYes.textContent = 'oui';
-  answerBtnYes.appendChild(bgBtnYes);
-  bgBtnYes.setAttribute('class', 'bgBtnYes');
-  answerDiv.appendChild(answerBtnNo);
-  answerBtnNo.setAttribute('class', 'answerNo');
-  answerBtnNo.textContent = 'non';
-  answerBtnNo.appendChild(bgBtnNo);
-  bgBtnNo.setAttribute('class', 'bgBtnNo');
+
+  if (data.questions[count].question !== 'Faites un enfant.' &&
+    data.questions[count].question !== 'Ne faites pas d\'enfant.' &&
+    data.questions[count].question !== 'Adoptez un enfant.' &&
+    data.questions[count].question !== 'Discuté(e) avec votre conjoint.') {
+    questionDiv.appendChild(answerDiv);
+    answerDiv.setAttribute('class', 'answer');
+    answerDiv.appendChild(answerBtnYes);
+    answerBtnYes.setAttribute('class', 'answerYes');
+    answerBtnYes.textContent = 'oui';
+    answerBtnYes.appendChild(bgBtnYes);
+    bgBtnYes.setAttribute('class', 'bgBtnYes');
+    answerDiv.appendChild(answerBtnNo);
+    answerBtnNo.setAttribute('class', 'answerNo');
+    answerBtnNo.textContent = 'non';
+    answerBtnNo.appendChild(bgBtnNo);
+    bgBtnNo.setAttribute('class', 'bgBtnNo');
+  } else {
+    questionP.style.backgroundColor = '#EF303B';
+  }
 
   var questionContainer = document.querySelectorAll('.questionContainer');
   var question = document.querySelectorAll('.question');
